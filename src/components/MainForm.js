@@ -13,6 +13,9 @@ const MainForm = (props) => {
     const [noOfColumns] = useState(props.gridData.noOfColumns);
     const [noOfRows] = useState(props.gridData.noOfRows);
 
+    /**
+     * setAllState reverts back all components to its origin state
+     */
     const setAllState = () => {
         setEnableStart(false);
         setResetFlows(true);
@@ -59,14 +62,26 @@ const MainForm = (props) => {
     }
 
 
+    /**
+     * allowDrop prevents default events when blocks are dropped to the simulator
+     * @param {*} event 
+     */
     function allowDrop(event) {
         event.preventDefault();
     }
 
+    /**
+     * drag event handles dragging blocks for the simulator
+     * @param {*} event 
+     */
     function drag(event) {
         event.dataTransfer.setData("text", event.target.id);
     }
 
+    /**
+     * drop event handles dropping blocks to the simulator
+     * @param {*} event 
+     */
     function drop(event) {
         event.preventDefault();
         var data = event.dataTransfer.getData("text");
@@ -83,19 +98,26 @@ const MainForm = (props) => {
         }
     }
 
+    /**
+     * onStartSelect generates start point for simulation process
+     * @param {*} column 
+     */
     const onStartSelect = (column) => {
 
         const row = 0;
 
         setFlowStart(true);
-        callStart(row, column);
+        simulateFlow(row, column);
         findFlowBlocks(column);
         setStartSimulation(true);
         setResetFlows(false);
     }
 
 
-
+   /**
+    * findFlowBlocks hides all blocks except waterflow start point block
+    * @param {*} column 
+    */
     const findFlowBlocks = (column) => {
         let itertor = 0;
         let sim_start = document.getElementsByClassName('start_block')[0];
@@ -105,7 +127,6 @@ const MainForm = (props) => {
             }
             itertor++;
         }
-
         let tables = document.getElementsByClassName('simulator_border')[0];
         let res = [];
         itertor = 0;
@@ -129,24 +150,32 @@ const MainForm = (props) => {
 
     }
 
-    const callStart = (row, column) => {
+    /**
+     * simulateFlow generates waterflow simulation through the blocks
+     * @param {*} row 
+     * @param {*} column 
+     */
+    const simulateFlow = (row, column) => {
         let tables = document.getElementsByClassName('simulator_border')[0];
         if ((row < noOfRows && tables.rows[row].cells[column].className === 'simulator')) {
             tables.rows[row].cells[column].className = 'fill_color';
-            callStart(row + 1, column);
+            simulateFlow(row + 1, column);
         } else if (row < noOfRows && tables.rows[row].cells[column].className === 'blocks') {
             if (row - 1 > -1) {
-                callStart(row - 1, column);
+                simulateFlow(row - 1, column);
             }
             if (column - 1 > -1 && row - 1 > -1) {
-                callStart(row - 1, column - 1);
+                simulateFlow(row - 1, column - 1);
             }
             if (column + 1 < noOfColumns && row - 1 > -1) {
-                callStart(row - 1, column + 1);
+                simulateFlow(row - 1, column + 1);
             }
         }
     }
 
+    /**
+     * startSimulating enables start point blocks for simulation
+     */
     const startSimulating = () => {
         setStartSimulation(true);
         setEnableStart(true);
