@@ -4,7 +4,6 @@ import { Button } from 'antd';
 import Constant from './../constants/Constant';
 
 const MainForm = (props) => {
-
     const [enableStart, setEnableStart] = useState(false);
     const [startSimulation, setStartSimulation] = useState(false);
     const [flowStart, setFlowStart] = useState(false);
@@ -61,7 +60,6 @@ const MainForm = (props) => {
         }
     }
 
-
     /**
      * allowDrop prevents default events when blocks are dropped to the simulator
      * @param {*} event 
@@ -111,7 +109,6 @@ const MainForm = (props) => {
         setResetFlows(false);
     }
 
-
     /**
      * findFlowBlocks hides all blocks except waterflow start point block
      * @param {*} column 
@@ -145,7 +142,6 @@ const MainForm = (props) => {
             }
             itertor++;
         }
-
     }
 
     /**
