@@ -5,45 +5,45 @@
   border: 1px solid white;
 }
 
-.simulator{
+.simulator {
   background: lightgrey;
   width: 50px;
   height: 50px;
   border: 1px solid lightgoldenrodyellow;
 }
 
-.simulator_border{
+.simulator_border {
   border-collapse: collapse;
   border: 1px solid black;
 }
 
-.flow_color{
+.flow_color {
   border-collapse: collapse;
   border: 1px solid white;
 }
 
-.sim_start{
+.sim_start {
   background: blue;
   width: 50px;
   height: 50px;
   border: 1px solid white;
 }
 
-.replaced_block{
+.replaced_block {
   background: lightgray;
   width: 47px;
   height: 50px;
   border: 1px solid black;  
 }
   
-.fill_color{
+.fill_color {
   background: blue;
   width: 50px;
   height: 50px;
   border: 1px solid white;  
 }
 
-.fill_no_color{
+.fill_no_color {
   background: white;
   width: 50px;
   height: 50px;
@@ -51,7 +51,7 @@
   pointer-events: none;
 }
 
-.container{
+.container {
   font-family: arial;
   font-size: 24px;
   margin: auto;
@@ -62,7 +62,7 @@
   padding: 16px;
 }
 
-.container_simulation{
+.container_simulation {
   font-family: arial;
   font-size: 24px;
   margin: auto;
