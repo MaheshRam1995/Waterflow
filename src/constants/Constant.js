@@ -12,6 +12,4 @@ const Constant = {
     SIMULATION_START:'Start Simulation'
 }
 
-
-
 export default Constant;

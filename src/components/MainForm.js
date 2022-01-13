@@ -103,9 +103,7 @@ const MainForm = (props) => {
      * @param {*} column 
      */
     const onStartSelect = (column) => {
-
         const row = 0;
-
         setFlowStart(true);
         simulateFlow(row, column);
         findFlowBlocks(column);
@@ -114,10 +112,10 @@ const MainForm = (props) => {
     }
 
 
-   /**
-    * findFlowBlocks hides all blocks except waterflow start point block
-    * @param {*} column 
-    */
+    /**
+     * findFlowBlocks hides all blocks except waterflow start point block
+     * @param {*} column 
+     */
     const findFlowBlocks = (column) => {
         let itertor = 0;
         let sim_start = document.getElementsByClassName('start_block')[0];
