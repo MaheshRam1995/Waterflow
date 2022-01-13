@@ -1,6 +1,8 @@
 import '../css/App.css';
-import {  useState } from 'react';
+import { useState } from 'react';
 import { Button } from 'antd';
+import Constant from './../constants/Constant';
+
 const MainForm = (props) => {
 
     const [enableStart, setEnableStart] = useState(false);
@@ -16,76 +18,76 @@ const MainForm = (props) => {
         setResetFlows(true);
         setFlowStart(false);
         setStartSimulation(false);
-        const filledBlocks  = document.getElementsByClassName('fill_color');
-        if(filledBlocks && filledBlocks.length> 0){
+        const filledBlocks = document.getElementsByClassName('fill_color');
+        if (filledBlocks && filledBlocks.length > 0) {
             [...filledBlocks].forEach(element => {
                 element.removeAttribute('class');
-                element.setAttribute('class','simulator');
+                element.setAttribute('class', 'simulator');
             });
         }
-        const filledBlockss  = document.getElementsByClassName('blocks');
-        if(filledBlockss && filledBlockss.length> 0){
+
+        const filledBlockss = document.getElementsByClassName('blocks');
+        if (filledBlockss && filledBlockss.length > 0) {
             [...filledBlockss].forEach(element => {
-                if(element.parentElement && element.parentElement.className === 'rowss'){
+                if (element.parentElement && element.parentElement.className === 'rowss') {
                     element.removeAttribute('class');
-                    element.setAttribute('class','simulator');
+                    element.setAttribute('class', 'simulator');
                     element.removeAttribute('id');
                     element.removeAttribute('draggable');
-                    element.addEventListener('drop',  (event) => {
+                    element.addEventListener('drop', (event) => {
                         drop(event);
                     })
-                    element.addEventListener('dragover',  (event) => {
+                    element.addEventListener('dragover', (event) => {
                         allowDrop(event);
                     })
                 }
             });
         }
 
-        const rps  = document.getElementsByClassName('replaced_block');
-        if(rps && rps.length> 0){
-            [...rps].forEach(element => {
-                    element.removeAttribute('class');
-                    element.setAttribute('class','blocks');
-                    element.addEventListener('dragstart',  (event) => {
-                        drag(event);
-                    })
-                    element.setAttribute('draggable','true');
-                    element.setAttribute('id',`drag${Math.random()}`);
-                
+        const replaceBlock = document.getElementsByClassName('replaced_block');
+        if (replaceBlock && replaceBlock.length > 0) {
+            [...replaceBlock].forEach(element => {
+                element.removeAttribute('class');
+                element.setAttribute('class', 'blocks');
+                element.addEventListener('dragstart', (event) => {
+                    drag(event);
+                })
+                element.setAttribute('draggable', 'true');
+                element.setAttribute('id', `drag${Math.random()}`);
             });
         }
-        
-    
     }
 
 
-    function allowDrop(ev) {
-        ev.preventDefault();
+    function allowDrop(event) {
+        event.preventDefault();
     }
 
-    function drag(ev) {
-        ev.dataTransfer.setData("text", ev.target.id);
+    function drag(event) {
+        event.dataTransfer.setData("text", event.target.id);
     }
 
-    function drop(ev) {
-        ev.preventDefault();
-        var data = ev.dataTransfer.getData("text");
-        var parent = ev.target.parentElement;
-        var child = ev.target;
-        var s = document.getElementById(data);
-        if (s && document.getElementsByClassName('beginSimulation')[0] && !document.getElementsByClassName('beginSimulation')[0].disabled) {
-            var sParent = s.parentElement;
-            var s1 = s.cloneNode();
-            parent.replaceChild(s1, child);
-            let row_2 = document.createElement('td');
-            row_2.setAttribute('class', 'replaced_block');
-            sParent.replaceChild(row_2, s);
+    function drop(event) {
+        event.preventDefault();
+        var data = event.dataTransfer.getData("text");
+        var parent = event.target.parentElement;
+        var child = event.target;
+        var draggedElement = document.getElementById(data);
+        if (draggedElement && document.getElementsByClassName('beginSimulation')[0] && !document.getElementsByClassName('beginSimulation')[0].disabled) {
+            var draggedElementParent = draggedElement.parentElement;
+            var dropElement = draggedElement.cloneNode();
+            parent.replaceChild(dropElement, child);
+            let creationColumn = document.createElement('td');
+            creationColumn.setAttribute('class', 'replaced_block');
+            draggedElementParent.replaceChild(creationColumn, draggedElement);
         }
     }
 
     const onStartSelect = (column) => {
-        setFlowStart(true);
+
         const row = 0;
+
+        setFlowStart(true);
         callStart(row, column);
         findFlowBlocks(column);
         setStartSimulation(true);
@@ -99,10 +101,11 @@ const MainForm = (props) => {
         let sim_start = document.getElementsByClassName('start_block')[0];
         while (itertor < noOfColumns) {
             if (itertor !== column) {
-                sim_start.rows[0].cells[itertor].className = 'fill_no_color'
+                sim_start.rows[0].cells[itertor].className = 'fill_no_color';
             }
             itertor++;
         }
+
         let tables = document.getElementsByClassName('simulator_border')[0];
         let res = [];
         itertor = 0;
@@ -112,6 +115,7 @@ const MainForm = (props) => {
             }
             itertor++;
         }
+
         itertor = 0;
         let flow = document.getElementsByClassName('flow_color')[0];
         while (itertor < noOfColumns) {
@@ -122,6 +126,7 @@ const MainForm = (props) => {
             }
             itertor++;
         }
+
     }
 
     const callStart = (row, column) => {
@@ -139,34 +144,30 @@ const MainForm = (props) => {
             if (column + 1 < noOfColumns && row - 1 > -1) {
                 callStart(row - 1, column + 1);
             }
-        } 
+        }
     }
 
     const startSimulating = () => {
         setStartSimulation(true);
         setEnableStart(true);
     }
+
     return (<>
-
-
         <div class="container_simulation">
-            <h2 style={{ textAlign: 'center' }}>Waterflow Simulator</h2>
-            <div style={{ display: 'flex', justifyContent:'center' }}>
-                <div style={{textAlign:'center'}}>
-                   {enableStart ? <div>Start Point</div>:<></>}
-                   {enableStart ?    <table className='start_block' style={{ borderCollapse: 'collapse' }}>
+            <h2 style={{ textAlign: 'center' }}>{Constant.PROJECT_TITLE}</h2>
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <div style={{ textAlign: 'center' }}>
+                    {enableStart ? <div>{Constant.START}</div> : <></>}
+                    {enableStart ? <table className='start_block' style={{ borderCollapse: 'collapse' }}>
                         <tbody>
                             <tr>
-
                                 {[...Array(noOfColumns)].map((e, i) => {
                                     return <td className='sim_start' onClick={() => { onStartSelect(i) }}></td>
-
-
                                 })}
                             </tr>
                         </tbody>
-                    </table> 
-                    :<></>}
+                    </table>
+                        : <></>}
                     <table className='simulator_border'>
                         <tbody>
                             {[...Array(noOfRows)].map((e, i) => {
@@ -188,26 +189,26 @@ const MainForm = (props) => {
                         </tbody>
                     </table>
                 </div>
-                <div style={{  paddingLeft:'15px', textAlign:'center' }}>
-                    <div>Blocks</div>
-                    <table style={{borderCollapse:'unset'}} cellspacing="15px">
+                <div style={{ paddingLeft: '15px', textAlign: 'center' }}>
+                    <div>{Constant.BLOCKS}</div>
+                    <table style={{ borderCollapse: 'unset' }} cellspacing="15px">
                         <tbody>
                             <tr>
                                 {[...Array(noOfBlocks)].map((e, i) => {
-                                     return  i%3 === 0 ? <td className='blocks' draggable="true" onDragStart={(event) => drag(event)} id={`drag${i}`}></td>
-                                     : <></>
+                                    return i % 3 === 0 ? <td className='blocks' draggable="true" onDragStart={(event) => drag(event)} id={`drag${i}`}></td>
+                                        : <></>
                                 })}
                             </tr>
                             <tr>
                                 {[...Array(noOfBlocks)].map((e, i) => {
-                                     return  i%3 === 1? <td className='blocks' draggable="true" onDragStart={(event) => drag(event)} id={`drag${i}`}></td>
-                                     : <></>
+                                    return i % 3 === 1 ? <td className='blocks' draggable="true" onDragStart={(event) => drag(event)} id={`drag${i}`}></td>
+                                        : <></>
                                 })}
                             </tr>
                             <tr>
                                 {[...Array(noOfBlocks)].map((e, i) => {
-                                     return  i%3 === 2 ? <td className='blocks' draggable="true" onDragStart={(event) => drag(event)} id={`drag${i}`}></td>
-                                     : <></>
+                                    return i % 3 === 2 ? <td className='blocks' draggable="true" onDragStart={(event) => drag(event)} id={`drag${i}`}></td>
+                                        : <></>
                                 })}
                             </tr>
                         </tbody>
@@ -215,10 +216,9 @@ const MainForm = (props) => {
                 </div>
             </div>
             <div>
-            <Button onClick ={()=> props.previousStep({noOfRows, noOfColumns, noOfBlocks})}type="primary">Previous</Button>
-            <Button  disabled={resetFlows} style={{float:'right', marginLeft:'8px'}} onClick ={()=> setAllState()}type="primary">Reset</Button>
-            <Button className='beginSimulation' disabled={startSimulation} style={{float:'right'}} onClick ={()=> startSimulating()}type="primary">Start Simulation</Button>
-           
+                <Button onClick={() => props.previousStep({ noOfRows, noOfColumns, noOfBlocks })} type="primary">{Constant.PREVIOUS}</Button>
+                <Button disabled={resetFlows} style={{ float: 'right', marginLeft: '8px' }} onClick={() => setAllState()} type="primary">{Constant.RESET}</Button>
+                <Button className='beginSimulation' disabled={startSimulation} style={{ float: 'right' }} onClick={() => startSimulating()} type="primary">{Constant.SIMULATION_START}</Button>
             </div>
         </div>
 
