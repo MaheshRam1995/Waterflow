@@ -1,8 +1,8 @@
 .blocks {
-	background: black;
-	width: 50px;
-	height: 50px;
-	border: 1px solid white;
+  background: black;
+  width: 50px;
+  height: 50px;
+  border: 1px solid white;
 }
 
 .simulator{
@@ -13,42 +13,42 @@
 }
 
 .simulator_border{
-	border-collapse: collapse;
-	border: 1px solid black;
+  border-collapse: collapse;
+  border: 1px solid black;
 }
 
 .flow_color{
   border-collapse: collapse;
-	border: 1px solid white;
+  border: 1px solid white;
 }
 
 .sim_start{
-	background: blue;
-	width: 50px;
-	height: 50px;
-	border: 1px solid white;
+  background: blue;
+  width: 50px;
+  height: 50px;
+  border: 1px solid white;
 }
 
 .replaced_block{
-	background: lightgray;
-	width: 47px;
-	height: 50px;
-	border: 1px solid black;  
+  background: lightgray;
+  width: 47px;
+  height: 50px;
+  border: 1px solid black;  
 }
   
 .fill_color{
-	background: blue;
-	width: 50px;
-	height: 50px;
-	border: 1px solid white;  
+  background: blue;
+  width: 50px;
+  height: 50px;
+  border: 1px solid white;  
 }
 
 .fill_no_color{
-	background: white;
-	width: 50px;
-	height: 50px;
-	border: 1px solid white;  
-	pointer-events: none;
+  background: white;
+  width: 50px;
+  height: 50px;
+  border: 1px solid white;  
+  pointer-events: none;
 }
 
 .container{
@@ -59,7 +59,7 @@
   height: auto;
   margin-top: 50px;
   outline: 1px solid black;
-	padding: 16px;
+  padding: 16px;
 }
 
 .container_simulation{
@@ -70,5 +70,5 @@
   height: auto;
   margin-top: 50px;
   outline: 1px solid black;
-	padding: 16px;
+  padding: 16px;
 }
