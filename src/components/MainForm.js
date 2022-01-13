@@ -244,8 +244,6 @@ const MainForm = (props) => {
                 <Button className='beginSimulation' disabled={startSimulation} style={{ float: 'right' }} onClick={() => startSimulating()} type="primary">{Constant.SIMULATION_START}</Button>
             </div>
         </div>
-
-
     </>)
 }
 
